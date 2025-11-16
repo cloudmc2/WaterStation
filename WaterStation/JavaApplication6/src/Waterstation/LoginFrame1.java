@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package javaapplication6;
+package Waterstation;
 
 import java.awt.Cursor;
 import java.awt.Desktop;
@@ -386,7 +386,7 @@ g2d.dispose();*/
          try {
             //database emtry
             
-            Connection con2 = DriverManager.getConnection("jdbc:mysql://localhost:3306/waterbizdb","root","database1234567");
+            Connection con2 = DriverManager.getConnection("jdbc:mysql://localhost:3306/waterbizdb","root","filbert123");
             //accept user entry
             String user_name =  LoginUser.getText().trim();
             String user_pass = LoginPass.getText().trim();

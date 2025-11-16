@@ -2,20 +2,24 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package javaapplication6;
+package Waterstation;
 
 /**
  *
  * @author Jander
  */
 import com.toedter.calendar.JDateChooser;
+import java.io.IOException;
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.Random;
 import javax.swing.JComboBox;
 import java.util.Date;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 public class MainTable extends javax.swing.JFrame {
@@ -53,7 +57,7 @@ public class MainTable extends javax.swing.JFrame {
  
         
        try {
-    Connection con3 = DriverManager.getConnection("jdbc:mysql://localhost:3306/waterbizdb","root","database1234567");
+    Connection con3 = DriverManager.getConnection("jdbc:mysql://localhost:3306/waterbizdb","root","filbert123");
     PreparedStatement prstmnt = con3.prepareStatement("select * from waterstation");
     ResultSet rs1 = prstmnt.executeQuery();
     ResultSetMetaData rsmd1 = rs1.getMetaData();
@@ -78,16 +82,15 @@ public class MainTable extends javax.swing.JFrame {
         // Add the Vector to the DefaultTableModel
         dtm.addRow(v);
     }
+    
+    
+    UpdateButton.setVisible(false);
 } catch (SQLException sqle) {
     sqle.printStackTrace(); // Log the exception for debugging purposes
 }
     
     
 }
-    
-    
-    
-    
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -104,8 +107,7 @@ public class MainTable extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         Station_Table = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        Delete = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         WaterType = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
@@ -128,10 +130,11 @@ public class MainTable extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         ADDbutton1 = new javax.swing.JButton();
-        jLabel14 = new javax.swing.JLabel();
+        Logout = new javax.swing.JLabel();
         Answer = new javax.swing.JLabel();
         Price_text1 = new javax.swing.JLabel();
         jDateChooser2 = new com.toedter.calendar.JDateChooser();
+        UpdateButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Inventory");
@@ -166,27 +169,15 @@ public class MainTable extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(0, 159, 249));
         jLabel1.setText("ORDER INFORMATION");
 
-        jButton2.setBackground(new java.awt.Color(0, 159, 249));
-        jButton2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/images/bin.png"))); // NOI18N
-        jButton2.setText("Delete");
-        jButton2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        Delete.setBackground(new java.awt.Color(0, 159, 249));
+        Delete.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        Delete.setForeground(new java.awt.Color(255, 255, 255));
+        Delete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/images/bin.png"))); // NOI18N
+        Delete.setText("Delete");
+        Delete.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        Delete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-
-        jButton3.setBackground(new java.awt.Color(0, 159, 249));
-        jButton3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(255, 255, 255));
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/images/support.png"))); // NOI18N
-        jButton3.setText("Edit");
-        jButton3.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                DeleteActionPerformed(evt);
             }
         });
 
@@ -204,9 +195,7 @@ public class MainTable extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(32, 32, 32)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(Delete, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(101, 101, 101))))
         );
         jPanel2Layout.setVerticalGroup(
@@ -215,9 +204,7 @@ public class MainTable extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(20, 20, 20)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(Delete, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap()
@@ -383,9 +370,14 @@ public class MainTable extends javax.swing.JFrame {
             }
         });
 
-        jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/image-table/switch.png"))); // NOI18N
-        jLabel14.setText("jLabel14");
-        jLabel14.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Logout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/image-table/switch.png"))); // NOI18N
+        Logout.setText("jLabel14");
+        Logout.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Logout.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                LogoutMouseClicked(evt);
+            }
+        });
 
         Answer.setFont(new java.awt.Font("Segoe UI Semibold", 1, 24)); // NOI18N
         Answer.setForeground(new java.awt.Color(255, 255, 255));
@@ -393,6 +385,17 @@ public class MainTable extends javax.swing.JFrame {
         Price_text1.setFont(new java.awt.Font("Segoe UI Semibold", 1, 24)); // NOI18N
         Price_text1.setForeground(new java.awt.Color(255, 255, 255));
         Price_text1.setText("Price:");
+
+        UpdateButton.setBackground(new java.awt.Color(255, 255, 255));
+        UpdateButton.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        UpdateButton.setForeground(new java.awt.Color(0, 159, 249));
+        UpdateButton.setText("Update");
+        UpdateButton.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        UpdateButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                UpdateButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -406,18 +409,20 @@ public class MainTable extends javax.swing.JFrame {
                         .addGap(169, 169, 169))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(Logout, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(Price_text1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(Answer, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(32, 32, 32))
+                                .addGap(42, 42, 42))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                 .addGap(6, 6, 6)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                        .addComponent(Reset, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(ADDbutton1, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                         .addGap(8, 8, 8)
                                         .addComponent(jLabel6)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -428,25 +433,6 @@ public class MainTable extends javax.swing.JFrame {
                                                 .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                                             .addComponent(CustomerName, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addComponent(Jug, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(Bottle, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                .addComponent(LitersOfWater, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                                .addComponent(Amount, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addComponent(AmountSelect, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                         .addGap(0, 0, Short.MAX_VALUE)
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -463,15 +449,33 @@ public class MainTable extends javax.swing.JFrame {
                                                         .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                                         .addGap(6, 6, 6)
-                                                        .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)))))))))
-                        .addGap(25, 25, 25))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(Price_text1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(Answer, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(100, 100, 100))))
+                                                        .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addComponent(Jug, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(Bottle, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addComponent(LitersOfWater, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(Reset, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                                .addComponent(Amount, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(AmountSelect, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(ADDbutton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                        .addGap(15, 15, 15))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(UpdateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(132, 132, 132))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -522,14 +526,16 @@ public class MainTable extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(LitersOfWater, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(AmountSelect, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(64, 64, 64)
+                .addGap(19, 19, 19)
+                .addComponent(UpdateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Reset, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(ADDbutton1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(Logout, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(Price_text1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(Answer, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(60, 60, 60))
@@ -570,10 +576,22 @@ public class MainTable extends javax.swing.JFrame {
 
     private void ResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ResetActionPerformed
         // TODO add your handling code here:
-        
-        String cusname = CustomerName.getText();
-        JDateChooser date = jDateChooser2;
-        String Amount_ent = AmountSelect.getText();
+            // ✅ RESET ALL INPUT FIELDS
+            CustomerName.setText("");
+            WaterType.setSelectedIndex(0);
+            LitersOfWater.setSelectedIndex(0);
+            AmountSelect.setText("");
+            Answer.setText("");
+            conatinergroup.clearSelection(); // Clear radio button selection
+            jDateChooser2.setDate(null);
+            
+            // Clear table selection
+            Station_Table.clearSelection();
+            
+            // Restore UI button states
+            ADDbutton1.setVisible(true);
+            UpdateButton.setVisible(false);
+            Reset.setVisible(true);
     }//GEN-LAST:event_ResetActionPerformed
 
     private void AmountSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AmountSelectActionPerformed
@@ -585,57 +603,103 @@ public class MainTable extends javax.swing.JFrame {
 
     private void LitersOfWaterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LitersOfWaterActionPerformed
         // TODO add your handling code here:
+        try {
+        String selected = (String)LitersOfWater.getSelectedItem();
+        String amountText = AmountSelect.getText().trim();
         
-         try{
-    String selected = (String)LitersOfWater.getSelectedItem();
-   // int value = Integer.parseInt(text);
-    int valueInLiters;
+        // Check if valid selections are made
+        if (selected.equals("Select") || amountText.isEmpty()) {
+            Answer.setText(""); // Clear the price
+            return; // Exit without calculating
+        }
+        
+        int valueInLiters;
+        int amount_value = Integer.parseInt(amountText);
 
-                // Add if-else conditions based on the selected item
-                if (selected.equals("1 Liter")) {
-                    valueInLiters = 10;
-                      int amount_value = Integer.parseInt(AmountSelect.getText());
-                      int result = valueInLiters*amount_value;
-                    Answer.setText(String.valueOf(result + " "+"₱"));
-                } else if (selected.equals("6 Liters")) {
-                    valueInLiters = 25;
-                     int amount_value = Integer.parseInt(AmountSelect.getText());
-                      int result = valueInLiters*amount_value;
-                      Answer.setText(String.valueOf(result + " "+"₱"));
-                } else if (selected.equals("22 Liters")) {
-                    valueInLiters = 40;
-                    
-                     int amount_value = Integer.parseInt(AmountSelect.getText());
-                      int result = valueInLiters*amount_value;
-                      Answer.setText(String.valueOf(result + " "+"₱"));
-                } else {
-                    // Handle "Select" or other invalid selections
-                    throw new IllegalArgumentException("Invalid selection");
-                }
- 
-    
- }catch(NumberFormatException e){
-     
-     
-     
- }
+        // Add if-else conditions based on the selected item
+        if (selected.equals("1 Liter")) {
+            valueInLiters = 10;
+        } else if (selected.equals("6 Liters")) {
+            valueInLiters = 25;
+        } else if (selected.equals("22 Liters")) {
+            valueInLiters = 40;
+        } else {
+            Answer.setText(""); // Clear the price for invalid selection
+            return;
+        }
         
+        int result = valueInLiters * amount_value;
+        Answer.setText(String.valueOf(result + " " + "₱"));
         
-        
-        String selectedValue = LitersOfWater.getSelectedItem().toString();
+    } catch(NumberFormatException e) {
+        Answer.setText(""); // Clear the price if there's an error
+    }
     }//GEN-LAST:event_LitersOfWaterActionPerformed
 
     private void WaterTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WaterTypeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_WaterTypeActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void DeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+        
+         int row = Station_Table.getSelectedRow();
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+    if (row == -1) {
+        JOptionPane.showMessageDialog(null, "Select a row first");
+        return;
+    }
+
+    DefaultTableModel dtm = (DefaultTableModel) Station_Table.getModel();
+
+    // Get the ID of the selected row (TO DELETE IN DATABASE)
+    String id = dtm.getValueAt(row, 0).toString(); // column 0 = ID
+
+    try {
+        // Connect to database
+        Connection con = DriverManager.getConnection(
+            "jdbc:mysql://localhost:3306/waterbizdb", 
+            "root", 
+            "filbert123"
+        );
+
+        // SQL DELETE query
+        String sql = "DELETE FROM waterstation WHERE ProductID = ?";
+        PreparedStatement pst = con.prepareStatement(sql);
+        pst.setString(1, id);
+
+        int affected = pst.executeUpdate();
+
+        if (affected > 0) {
+            dtm.removeRow(row); // remove from JTable
+            JOptionPane.showMessageDialog(null, "Successfully deleted");
+            
+                  // ✅ RESET ALL INPUT FIELDS
+            CustomerName.setText("");
+            WaterType.setSelectedIndex(0);
+            LitersOfWater.setSelectedIndex(0);
+            AmountSelect.setText("");
+            Answer.setText("");
+            conatinergroup.clearSelection(); // Clear radio button selection
+            jDateChooser2.setDate(null);
+            
+            // Clear table selection
+            Station_Table.clearSelection();
+            
+            // Restore UI button states
+            ADDbutton1.setVisible(true);
+            UpdateButton.setVisible(false);
+            Reset.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(null, "Delete failed. ID not found.");
+        }
+
+        con.close();
+
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+    }
+    }//GEN-LAST:event_DeleteActionPerformed
 
     private void CustomerNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CustomerNameActionPerformed
         // TODO add your handling code here:
@@ -673,7 +737,7 @@ public class MainTable extends javax.swing.JFrame {
              String cusname = CustomerName.getText().trim();
              
             
-           Connection con2 = DriverManager.getConnection("jdbc:mysql://localhost:3306/waterbizdb","root","database1234567");
+           Connection con2 = DriverManager.getConnection("jdbc:mysql://localhost:3306/waterbizdb","root","filbert123");
            String sql1 =  "INSERT INTO waterstation (ProductID, Customer, Item_Name, Container_Type, Quantity, Liters, Price, Date) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
            PreparedStatement stmnt = con2.prepareStatement(sql1);
            
@@ -729,13 +793,19 @@ public class MainTable extends javax.swing.JFrame {
         
               
               
-         Date selectedDate = jDateChooser2.getDate();
-
-        // Format the selected date
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
-        String formattedDate = dateFormat.format(selectedDate);
-           
-           stmnt.setString(8, formattedDate);
+        Date selectedDate = jDateChooser2.getDate();
+        String formattedDate;
+        
+        if (selectedDate != null) {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); // Use this format for database
+            formattedDate = dateFormat.format(selectedDate);
+        } else {
+            // If no date selected, use current date
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            formattedDate = dateFormat.format(new Date());
+        }
+        
+        stmnt.setString(8, formattedDate);
            stmnt.executeUpdate();
             DefaultTableModel model = (DefaultTableModel) Station_Table.getModel();
            model.setRowCount(0);
@@ -764,9 +834,9 @@ int randomUID = uidGenerator.getUniqueID();
 int id = Integer.parseInt(Station_Table.getValueAt(Station_Table.getSelectedRow(), 0).toString());
 
 try {
-    Connection con4 = DriverManager.getConnection("jdbc:mysql://localhost:3306/waterbizdb", "root", "database1234567");
+    Connection con4 = DriverManager.getConnection("jdbc:mysql://localhost:3306/waterbizdb", "root", "filbert123");
     Statement st2 = con4.createStatement();
-    ResultSet resu = st2.executeQuery("Select * from waterstation where id=" + id);
+    ResultSet resu = st2.executeQuery("Select * from waterstation where ProductID=" + id);
 
     while (resu.next()) {
         randomUID = resu.getInt("ProductID");
@@ -782,7 +852,25 @@ try {
         AmountSelect.setText(resu.getString("Quantity"));
         LitersOfWater.setSelectedItem(resu.getString("Liters"));
         Answer.setText(resu.getString("Price"));
-        jDateChooser2.setDate(resu.getDate("Date"));
+          // Handle date parsing safely for VARCHAR/TEXT date column
+try {
+    String dateString = resu.getString("Date");
+    if (dateString != null && !dateString.isEmpty()) {
+        // Parse the string date based on your format
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy"); // Change format to match your database
+        Date parsedDate = dateFormat.parse(dateString);
+        jDateChooser2.setDate(parsedDate);
+    }
+} catch (Exception dateEx) {
+    System.out.println("Date parsing error: " + dateEx.getMessage());
+    dateEx.printStackTrace();
+}
+
+ADDbutton1.setVisible(false);
+UpdateButton.setVisible(true);
+Reset.setVisible(false);
+
+
     }
 } catch (SQLException sqle) {
     sqle.printStackTrace(); // Log the exception for debugging purposes
@@ -803,47 +891,37 @@ try {
 
     private void AmountSelectKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_AmountSelectKeyReleased
         // TODO add your handling code here:
+       try {
+        String selected = (String)LitersOfWater.getSelectedItem();
+        String amountText = AmountSelect.getText().trim();
         
-         try{
-    String selected = (String)LitersOfWater.getSelectedItem();
-   // int value = Integer.parseInt(text);
-    int valueInLiters;
+        // Check if valid selections are made
+        if (selected.equals("Select") || amountText.isEmpty()) {
+            Answer.setText(""); // Clear the price
+            return; // Exit without calculating
+        }
+        
+        int valueInLiters;
+        int amount_value = Integer.parseInt(amountText);
 
-                // Add if-else conditions based on the selected item
-                if (selected.equals("1 Liter")) {
-                    valueInLiters = 10;
-                      int amount_value = Integer.parseInt(AmountSelect.getText());
-                      int result = valueInLiters*amount_value;
-                    Answer.setText(String.valueOf(result + " "+"₱"));
-                } else if (selected.equals("6 Liters")) {
-                    valueInLiters = 25;
-                     int amount_value = Integer.parseInt(AmountSelect.getText());
-                      int result = valueInLiters*amount_value;
-                      Answer.setText(String.valueOf(result + " "+"₱"));
-                } else if (selected.equals("22 Liters")) {
-                    valueInLiters = 40;
-                    
-                     int amount_value = Integer.parseInt(AmountSelect.getText());
-                      int result = valueInLiters*amount_value;
-                      Answer.setText(String.valueOf(result + " "+"₱"));
-                } else {
-                    // Handle "Select" or other invalid selections
-                    throw new IllegalArgumentException("Invalid selection");
-                }
- 
-    
-                
-                
-                
-                
-                
-                
-                
-                
-                
- }catch(NumberFormatException e){
-     
- }
+        // Add if-else conditions based on the selected item
+        if (selected.equals("1 Liter")) {
+            valueInLiters = 10;
+        } else if (selected.equals("6 Liters")) {
+            valueInLiters = 25;
+        } else if (selected.equals("22 Liters")) {
+            valueInLiters = 40;
+        } else {
+            Answer.setText(""); // Clear the price for invalid selection
+            return;
+        }
+        
+        int result = valueInLiters * amount_value;
+        Answer.setText(String.valueOf(result + " " + "₱"));
+        
+    } catch(NumberFormatException e) {
+        Answer.setText(""); // Clear the price if there's an error
+    }
         
     }//GEN-LAST:event_AmountSelectKeyReleased
 
@@ -912,6 +990,133 @@ private boolean containsItem(JComboBox<?> comboBox, Object item) {
         
         
     }//GEN-LAST:event_JugItemStateChanged
+
+    private void LogoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogoutMouseClicked
+        try {
+            // TODO add your handling code here:
+// Source - https://stackoverflow.com/a
+// Posted by camickr, modified by community. See post 'Timeline' for change history
+// Retrieved 2025-11-17, License - CC BY-SA 3.0
+
+
+// Close current window
+   int result = JOptionPane.showConfirmDialog(
+            null, // Parent component (can be null for a centered dialog)
+            "Are you sure you want to perform this action?", // The message to display
+            "Confirmation", // The title of the dialog box
+            JOptionPane.YES_NO_CANCEL_OPTION // The options to display (e.g., YES_NO_OPTION, OK_CANCEL_OPTION)
+        );
+
+ if (result == JOptionPane.YES_OPTION) {
+          
+            // Perform the action
+            
+this.dispose();
+// Open login window
+LoginFrame1 login = new LoginFrame1();
+login.setLocationRelativeTo(null);  // center on screen
+login.setVisible(true);
+ }
+ else if (result == JOptionPane.NO_OPTION) {
+            System.out.println("User selected No.");
+            // Do not perform the action
+
+ }
+
+        } catch (IOException ex) {
+            Logger.getLogger(MainTable.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+    }//GEN-LAST:event_LogoutMouseClicked
+
+    private void UpdateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdateButtonActionPerformed
+        // TODO add your handling code here:
+ // Check if a row is selected
+    int row = Station_Table.getSelectedRow();
+    if (row == -1) {
+        JOptionPane.showMessageDialog(null, "Select a row first");
+        return;
+    }
+    
+    // Get the ProductID from the selected row
+    DefaultTableModel dtm = (DefaultTableModel) Station_Table.getModel();
+    String id = dtm.getValueAt(row, 0).toString();
+    
+    // Get values from input fields (excluding customer name and date)
+    String item = WaterType.getSelectedItem().toString();
+    String cont = "";
+    if (Jug.isSelected()) {
+        cont = "Jug";
+    } else if (Bottle.isSelected()) {
+        cont = "Bottle";
+    }
+    String qty = AmountSelect.getText().trim();
+    String Lit = LitersOfWater.getSelectedItem().toString();
+    String Price = Answer.getText().trim();
+    
+    try {
+        // Connect to database
+        Connection con = DriverManager.getConnection(
+            "jdbc:mysql://localhost:3306/waterbizdb", 
+            "root", 
+            "filbert123"
+        ); 
+        
+        // SQL UPDATE query - without Customer and Date
+        String sql = "UPDATE waterstation SET Item_Name=?, Container_Type=?, Quantity=?, Liters=?, Price=? WHERE ProductID=?";
+        PreparedStatement pst = con.prepareStatement(sql);
+        
+        // Set parameters in correct order
+        pst.setString(1, item);       // Item_Name
+        pst.setString(2, cont);       // Container_Type
+        pst.setString(3, qty);        // Quantity
+        pst.setString(4, Lit);        // Liters
+        pst.setString(5, Price);      // Price
+        pst.setString(6, id);         // ProductID (WHERE clause)
+        
+        // Execute update
+        int affected = pst.executeUpdate();
+        
+        if (affected > 0) {
+            JOptionPane.showMessageDialog(null, "Successfully updated!");
+            
+            // Refresh the table to show updated data
+            DefaultTableModel model = (DefaultTableModel) Station_Table.getModel();
+            model.setRowCount(0);
+            showtable();
+            
+            // ✅ RESET ALL INPUT FIELDS
+            CustomerName.setText("");
+            WaterType.setSelectedIndex(0);
+            LitersOfWater.setSelectedIndex(0);
+            AmountSelect.setText("");
+            Answer.setText("");
+            conatinergroup.clearSelection(); // Clear radio button selection
+            jDateChooser2.setDate(null);
+            
+            // Clear table selection
+            Station_Table.clearSelection();
+            
+            // Restore UI button states
+            ADDbutton1.setVisible(true);
+            UpdateButton.setVisible(false);
+            Reset.setVisible(true);
+            
+        } else {
+            JOptionPane.showMessageDialog(null, "Update failed. ID not found.");
+        }
+        
+        // Close resources
+        pst.close();
+        con.close();
+        
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+        e.printStackTrace();
+    }
+        
+    }//GEN-LAST:event_UpdateButtonActionPerformed
     
     /**
      * @param args the command line arguments
@@ -956,22 +1161,22 @@ private boolean containsItem(JComboBox<?> comboBox, Object item) {
     private javax.swing.JLabel Answer;
     private javax.swing.JRadioButton Bottle;
     private javax.swing.JTextField CustomerName;
+    private javax.swing.JButton Delete;
     private javax.swing.JRadioButton Jug;
     private javax.swing.JComboBox<String> LitersOfWater;
+    private javax.swing.JLabel Logout;
     private javax.swing.JLabel Price_text1;
     private javax.swing.JButton Reset;
     private javax.swing.JTable Station_Table;
+    private javax.swing.JButton UpdateButton;
     private javax.swing.JComboBox<String> WaterType;
     private javax.swing.ButtonGroup conatinergroup;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private com.toedter.calendar.JDateChooser jDateChooser2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

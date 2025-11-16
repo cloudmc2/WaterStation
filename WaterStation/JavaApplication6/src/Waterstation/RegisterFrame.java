@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package javaapplication6;
+package Waterstation;
 
 import java.awt.Desktop;
 import java.awt.Image;
@@ -394,7 +394,7 @@ public void ScaledImages(){
             String username1 = SIgnupUser.getText().trim();
         String password1 = SignUpPass.getText().trim();
 
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/waterbizdb","root","database1234567");
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/waterbizdb","root","filbert123");
             String query = "insert into account_signup values(?,?)";
             PreparedStatement ps = con.prepareStatement(query);
             ps.setString(1, SIgnupUser.getText());

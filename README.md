@@ -1,4 +1,4 @@
-First Java Project made in netbeans using Java swing and database is MySQL
+First Java Project (1st Year in IT) made in netbeans using Java swing and database is MySQL
 
 1. Login
    <img width="1197" height="727" alt="Screenshot 2025-11-17 044106" src="https://github.com/user-attachments/assets/6ada90b3-058a-4f73-bfba-f4862703a882" />

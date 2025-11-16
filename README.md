@@ -1,3 +1,4 @@
+Simple POS Inventory System application for a water station.
 First Java Project (1st Year in IT) made in netbeans using Java swing and database is MySQL
 
 1. Login
